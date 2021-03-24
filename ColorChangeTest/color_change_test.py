@@ -8,14 +8,15 @@ def cv_show(img, s):
     cv2.destroyAllWindows()
 
 
-img = cv2.imread('./MDtest.png')
+img = cv2.imread('./MStest.png')
 cv_show(img, "Origin")
 
 height = img.shape[0]
 width = img.shape[1]
 
 # color_range = [[1, 55], [1, 90], [130, 170]]  # MA
-color_range = [[25, 38], [25, 38], [25, 38]]  # MD
+# color_range = [[25, 38], [25, 38], [25, 38]]  # MD
+color_range = [[90, 120], [40, 70], [30, 60]]  # MS
 
 for i in range(0, height):
     for j in range(0, width):
@@ -44,10 +45,5 @@ cv_show(img, "Erosion")
 
 h_c = int(height / 6)
 w_c = int(width / 20)
-# print(img.shape)
-# print(h_cut)
-# print(w_cut)
-
-# cut_img = img[:, h_cut: (height - h_cut)]
 cut_img = img[h_c:height - h_c, w_c:width - w_c]
 cv_show(cut_img, "Cut")
