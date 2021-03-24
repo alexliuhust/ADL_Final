@@ -8,13 +8,14 @@ def cv_show(img, s):
     cv2.destroyAllWindows()
 
 
-img = cv2.imread('./MAtest01.png')
+img = cv2.imread('./MDtest.png')
 cv_show(img, "Origin")
 
 height = img.shape[0]
 width = img.shape[1]
 
-color_range = [[1, 55], [1, 90], [130, 170]]  # This is BGR system
+# color_range = [[1, 55], [1, 90], [130, 170]]  # MA
+color_range = [[25, 38], [25, 38], [25, 38]]  # MD
 
 for i in range(0, height):
     for j in range(0, width):
@@ -28,7 +29,7 @@ for i in range(0, height):
             img[i, j] = [0, 0, 0]
 
 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-# cv_show(img, "Extraction")
+cv_show(img, "Extraction")
 
 dilate_num = 5
 erode_num = 2
@@ -42,7 +43,7 @@ img = cv2.erode(img, kernel, iterations=1)
 cv_show(img, "Erosion")
 
 h_c = int(height / 6)
-w_c = int(width / 15)
+w_c = int(width / 20)
 # print(img.shape)
 # print(h_cut)
 # print(w_cut)
