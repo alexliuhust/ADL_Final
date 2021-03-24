@@ -9,16 +9,15 @@ def cv_show(img, s):
 
 
 img = cv2.imread('./MAtest01.png')
-print(img.shape)
 cv_show(img, "Origin")
 
-width = img.shape[0]
-height = img.shape[1]
+height = img.shape[0]
+width = img.shape[1]
 
 color_range = [[1, 55], [1, 90], [130, 170]]  # This is BGR system
 
-for i in range(0, width):
-    for j in range(0, height):
+for i in range(0, height):
+    for j in range(0, width):
         data = (img[i, j])
 
         if color_range[0][0] <= data[0] <= color_range[0][1] \
@@ -29,16 +28,25 @@ for i in range(0, width):
             img[i, j] = [0, 0, 0]
 
 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-print(img.shape)
-cv_show(img, "Extraction")
+# cv_show(img, "Extraction")
 
-kernel = np.ones((4, 4), dtype=np.uint8)
+dilate_num = 5
+erode_num = 2
+
+kernel = np.ones((dilate_num, dilate_num), dtype=np.uint8)
 img = cv2.dilate(img, kernel, iterations=1)
-print(img.shape)
-cv_show(img, "Dilation ")
+# cv_show(img, "Dilation ")
 
-kernel = np.ones((3, 3), dtype=np.uint8)
+kernel = np.ones((erode_num, erode_num), dtype=np.uint8)
 img = cv2.erode(img, kernel, iterations=1)
-print(img.shape)
 cv_show(img, "Erosion")
 
+h_c = int(height / 6)
+w_c = int(width / 15)
+# print(img.shape)
+# print(h_cut)
+# print(w_cut)
+
+# cut_img = img[:, h_cut: (height - h_cut)]
+cut_img = img[h_c:height - h_c, w_c:width - w_c]
+cv_show(cut_img, "Cut")
