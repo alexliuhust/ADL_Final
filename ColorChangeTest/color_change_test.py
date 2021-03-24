@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
-from StatesColor import get_color_range
+from states_color import get_color_range
 from edge_detect import get_edge
+
 
 def cv_show(img, s):
     cv2.imshow(s, img)
@@ -12,15 +13,14 @@ def cv_show(img, s):
 def get_chars(state):
     org = cv2.imread("./" + state + "test.png")
     cv_show(org, "Origin")
+    input = org.copy()
+    edge = get_edge(input)
 
     height = org.shape[0]
     width = org.shape[1]
     h_c = int(height / 5)
     w_c = int(width / 20)
     img = org[h_c:height - h_c, w_c:width - w_c]
-
-    edge = get_edge(img)
-
     color_range = get_color_range(state)
 
     for i in range(0, img.shape[0]):
@@ -47,6 +47,4 @@ def get_chars(state):
     kernel = np.ones((erode_num, erode_num), dtype=np.uint8)
     img = cv2.erode(img, kernel, iterations=1)
     cv_show(img, "Erosion")
-
     cv_show(edge, "Edge")
-
