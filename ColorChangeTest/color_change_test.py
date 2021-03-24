@@ -16,7 +16,7 @@ def get_chars(state):
     height = img.shape[0]
     width = img.shape[1]
 
-    color_range = get_color_range("MA")
+    color_range = get_color_range(state)
 
     for i in range(0, height):
         for j in range(0, width):
@@ -30,18 +30,18 @@ def get_chars(state):
                 img[i, j] = [0, 0, 0]
 
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    # cv_show(img, "Extraction")
+    cv_show(img, "Extraction")
 
     dilate_num = 5
     erode_num = 2
 
     kernel = np.ones((dilate_num, dilate_num), dtype=np.uint8)
     img = cv2.dilate(img, kernel, iterations=1)
-    # cv_show(img, "Dilation ")
+    cv_show(img, "Dilation ")
 
     kernel = np.ones((erode_num, erode_num), dtype=np.uint8)
     img = cv2.erode(img, kernel, iterations=1)
-    # cv_show(img, "Erosion")
+    cv_show(img, "Erosion")
 
     h_c = int(height / 6)
     w_c = int(width / 20)
