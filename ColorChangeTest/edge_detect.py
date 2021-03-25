@@ -11,14 +11,24 @@ def get_top_bottom(img):
     return out
 
 
-def get_edge(img):
-    img = get_top_bottom(img)
-    edge = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+def get_edge(img, top_bottom):
+    if top_bottom:
+        img = get_top_bottom(img)
 
-    sobel_x = cv2.Sobel(edge, cv2.CV_64F, 1, 0)
-    sobel_y = cv2.Sobel(edge, cv2.CV_64F, 0, 1)
+    if len(img.shape) == 3:
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    sobel_x = cv2.Sobel(img, cv2.CV_64F, 1, 0)
+    sobel_y = cv2.Sobel(img, cv2.CV_64F, 0, 1)
     sobel_x = cv2.convertScaleAbs(sobel_x)
     sobel_y = cv2.convertScaleAbs(sobel_y)
     edge = cv2.addWeighted(sobel_x, 0.5, sobel_y, 0.5, 0)
 
+    for i in range(0, edge.shape[0]):
+        for j in range(0, edge.shape[1]):
+            data = (edge[i, j])
+            if data >= 120:
+                edge[i, j] = 255
+            else:
+                edge[i, j] = 0
     return edge

@@ -11,16 +11,22 @@ def cv_show(img, s):
 
 
 def get_chars(state):
-    org = cv2.imread("./" + state + "test.png")
+    org = cv2.imread("./" + state + ".png")
+    org = cv2.resize(org, (300, 150), interpolation=cv2.INTER_AREA)
     cv_show(org, "Origin")
+
     input = org.copy()
-    edge = get_edge(input)
+    edge = get_edge(input, True)
 
     height = org.shape[0]
     width = org.shape[1]
     h_c = int(height / 5)
-    w_c = int(width / 20)
+    w_c = int(width / 40)
     img = org[h_c:height - h_c, w_c:width - w_c]
+
+    # input = img.copy()
+    # num_edge = get_edge(input, False)
+
     color_range = get_color_range(state)
 
     for i in range(0, img.shape[0]):
@@ -47,4 +53,16 @@ def get_chars(state):
     kernel = np.ones((erode_num, erode_num), dtype=np.uint8)
     img = cv2.erode(img, kernel, iterations=1)
     cv_show(img, "Erosion")
-    cv_show(edge, "Edge")
+
+    # number = img.copy()
+    # for i in range(0, number.shape[0]):
+    #     for j in range(0, number.shape[1]):
+    #         data1 = (number[i, j])
+    #         data2 = (num_edge[i, j])
+    #         if data1 == data2 == 255:
+    #             number[i, j] = 255
+    #         else:
+    #             number[i, j] = 0
+    # cv_show(number, "Numbers")
+
+    cv_show(edge, "T&B Edge")
