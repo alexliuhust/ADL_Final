@@ -1,10 +1,11 @@
 
 def get_color_range(state):
-    if state == "MA":
-        return [[1, 55], [1, 90], [130, 170]]
-    elif state == "MD" or state == "NE":
+    s = state[0:2]
+    if s == "MA":
+        return [[1, 165], [1, 145], [130, 240]]
+    elif s == "MD" or state == "NE":
         # return [[25, 38], [25, 38], [25, 38]]
         return [[0, 38], [0, 38], [0, 38]]
-    elif state == "MS":
-        return [[90, 120], [40, 70], [30, 60]]
+    elif s == "MS":
+        return [[38, 130], [21, 78], [10, 60]]
 

@@ -15,8 +15,8 @@ def get_chars(state):
     org = cv2.resize(org, (300, 150), interpolation=cv2.INTER_AREA)
     cv_show(org, "Origin")
 
-    input = org.copy()
-    edge = get_edge(input, True)
+    # input = org.copy()
+    # edge = get_edge(input, True)
 
     height = org.shape[0]
     width = org.shape[1]
@@ -40,19 +40,18 @@ def get_chars(state):
             else:
                 img[i, j] = [0, 0, 0]
 
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    # cv_show(img, "Extraction")
+    extr = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    dilate_num = 5
+    dilate_num = 2
     erode_num = 2
 
-    kernel = np.ones((dilate_num, dilate_num), dtype=np.uint8)
-    img = cv2.dilate(img, kernel, iterations=1)
-    # cv_show(img, "Dilation ")
+    for k in range(2):
+        kernel = np.ones((dilate_num, dilate_num), dtype=np.uint8)
+        extr = cv2.dilate(extr, kernel, iterations=2)
+        kernel = np.ones((erode_num, erode_num), dtype=np.uint8)
+        extr = cv2.erode(extr, kernel, iterations=1)
 
-    kernel = np.ones((erode_num, erode_num), dtype=np.uint8)
-    img = cv2.erode(img, kernel, iterations=1)
-    cv_show(img, "Erosion")
+    cv_show(extr, "Extraction")
 
     # number = img.copy()
     # for i in range(0, number.shape[0]):
@@ -65,4 +64,4 @@ def get_chars(state):
     #             number[i, j] = 0
     # cv_show(number, "Numbers")
 
-    cv_show(edge, "T&B Edge")
+    # cv_show(edge, "T&B Edge")
