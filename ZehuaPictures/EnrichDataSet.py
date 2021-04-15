@@ -21,12 +21,11 @@ def get_file_list(dir, file_list, ext=None):
 
 
 org_img_folder = './data/origin'
-
 img_list = get_file_list(org_img_folder, [], 'png')
 
 
 def add_noise(img):
-    count = int(np.random.uniform(0, 1000))
+    count = int(np.random.uniform(0, 2000))
     for point in range(count):
         xi = int(np.random.uniform(0, img.shape[1]))
         xj = int(np.random.uniform(0, img.shape[0]))
@@ -35,24 +34,53 @@ def add_noise(img):
         img[xj, xi, 2] = 20
 
 
-for x in range(1):
-    img_path = img_list[x]
-    img_name = os.path.splitext(os.path.basename(img_path))[0]
-    img = cv2.imread(img_path, cv2.IMREAD_COLOR)
-    img = cv2.resize(img, (320, 160), interpolation=cv2.INTER_AREA)
+def rotate_bound(image, angle):
+    (h, w) = image.shape[:2]
+    M = cv2.getRotationMatrix2D((w / 2, h / 2), angle, 1.0)
 
-    for i in range(11):
-        cut_img = img.copy()
-        cut_img = cut_img[i:150+i, 2*i:300+2*i]
+    newW = int((h * np.abs(M[0, 1])) + (w * np.abs(M[0, 0])))
+    newH = int((h * np.abs(M[0, 0])) + (w * np.abs(M[0, 1])))
 
-        to_add_noise = int(np.random.uniform(0, 8))
-        if 0 <= to_add_noise <= 1:
-            add_noise(cut_img)
+    M[0, 2] += (newW - w) / 2
+    M[1, 2] += (newH - h) / 2
 
-        save_path = './data/enriched/' + img_name + str(i) + '.png'
-        cv2.imwrite(save_path, cut_img)
+    return cv2.warpAffine(image, M, (newW, newH))
 
 
+def enrich_set():
+    for x in range(1):
+        img_path = img_list[x]
+        img_name = os.path.splitext(os.path.basename(img_path))[0]
+        img = cv2.imread(img_path, cv2.IMREAD_COLOR)
+        img = cv2.resize(img, (318, 159), interpolation=cv2.INTER_AREA)
+
+        count = 0
+        for i in range(4):
+            cut_img = img[i:150 + i, 3 * i:300 + 3 * i]
+            cv2.imwrite('./data/enriched/' + img_name + str(count) + '.png', cut_img)
+            count += 1
+
+            for j in range(4):
+                if j <= 1:
+                    noise_img = cut_img.copy()
+                    add_noise(noise_img)
+                    cv2.imwrite('./data/enriched/' + img_name + str(count) + '.png', noise_img)
+                    count += 1
+
+                elif j >= 2:
+                    rotate_img = cut_img.copy()
+                    angle = np.random.uniform(-2.0, 2.0)
+                    rotate_img = rotate_bound(rotate_img, angle)
+                    rotate_img = cv2.resize(rotate_img, (300, 150), interpolation=cv2.INTER_AREA)
+                    cv2.imwrite('./data/enriched/' + img_name + str(count) + '.png', rotate_img)
+                    count += 1
+
+
+
+
+
+# p = cv2.imread("./data/enriched/CO011.png", cv2.IMREAD_COLOR)
+# print(p.shape)
 
 
 
