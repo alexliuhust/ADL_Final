@@ -20,10 +20,6 @@ def get_file_list(dir, file_list, ext=None):
     return file_list
 
 
-org_img_folder = './data/origin'
-img_list = get_file_list(org_img_folder, [], 'png')
-
-
 def add_noise(img):
     count = int(np.random.uniform(0, 2000))
     for point in range(count):
@@ -47,7 +43,7 @@ def rotate_bound(image, angle):
     return cv2.warpAffine(image, M, (newW, newH))
 
 
-def enrich_set():
+def enrich_set(img_list):
     for x in range(1):
         img_path = img_list[x]
         img_name = os.path.splitext(os.path.basename(img_path))[0]
@@ -76,11 +72,10 @@ def enrich_set():
                     count += 1
 
 
+def do_enrichment():
+    org_img_folder = './data/origin'
+    img_list = get_file_list(org_img_folder, [], 'png')
+    enrich_set(img_list)
 
 
-
-# p = cv2.imread("./data/enriched/CO011.png", cv2.IMREAD_COLOR)
-# print(p.shape)
-
-
-
+do_enrichment()
