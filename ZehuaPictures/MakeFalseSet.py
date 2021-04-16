@@ -43,7 +43,7 @@ def do_make_false_pic():
     make_false_pic(img_list, n=1)
 
 
-do_make_false_pic()
+# do_make_false_pic()
 
 
 

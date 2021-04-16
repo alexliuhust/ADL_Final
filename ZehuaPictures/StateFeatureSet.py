@@ -20,6 +20,6 @@ def do_get_feature():
     get_feature(img_list)
 
 
-do_get_feature()
+# do_get_feature()
 
 
