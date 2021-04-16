@@ -43,8 +43,8 @@ def rotate_bound(image, angle):
     return cv2.warpAffine(image, M, (newW, newH))
 
 
-def enrich_set(img_list):
-    for x in range(1):
+def enrich_set(img_list, n=1):
+    for x in range(n):
         img_path = img_list[x]
         img_name = os.path.splitext(os.path.basename(img_path))[0]
         img = cv2.imread(img_path, cv2.IMREAD_COLOR)
@@ -75,7 +75,7 @@ def enrich_set(img_list):
 def do_enrichment():
     org_img_folder = './data/origin'
     img_list = get_file_list(org_img_folder, [], 'png')
-    enrich_set(img_list)
+    enrich_set(img_list, n=1)
 
 
-do_enrichment()
+# do_enrichment()
