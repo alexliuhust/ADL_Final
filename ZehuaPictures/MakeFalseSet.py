@@ -34,8 +34,6 @@ def make_false_pic(img_list, n=1):
                 cut_height = j * 10
                 cut = get_random_cut_img(img, cut_height, height, width)
                 cv2.imwrite('./data/false_plate/F' + str(x) + str(i) + str(j) + '.png', cut)
-            print(str((i + 1) * 200) + ' false images completed')
-
 
 
 def do_make_false_pic():
@@ -44,7 +42,7 @@ def do_make_false_pic():
     make_false_pic(img_list, len(img_list))
 
 
-do_make_false_pic()
+# do_make_false_pic()
 
 
 

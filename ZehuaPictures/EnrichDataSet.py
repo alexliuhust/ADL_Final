@@ -21,7 +21,7 @@ def get_file_list(dir, file_list, ext=None):
 
 
 def add_noise(img):
-    count = int(np.random.uniform(0, 2000))
+    count = int(np.random.uniform(0, 800))
     for point in range(count):
         xi = int(np.random.uniform(0, img.shape[1]))
         xj = int(np.random.uniform(0, img.shape[0]))
@@ -70,12 +70,14 @@ def enrich_set(img_list, n=1):
                     rotate_img = cv2.resize(rotate_img, (300, 150), interpolation=cv2.INTER_AREA)
                     cv2.imwrite('./data/enriched/' + img_name + str(count) + '.png', rotate_img)
                     count += 1
+        if (x + 1) % 10 == 0:
+            print(str(x) + " origin images have been enriched")
 
 
 def do_enrichment():
     org_img_folder = './data/origin'
     img_list = get_file_list(org_img_folder, [], 'png')
-    enrich_set(img_list, n=1)
+    enrich_set(img_list, len(img_list))
 
 
 # do_enrichment()
