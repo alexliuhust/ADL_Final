@@ -1,4 +1,3 @@
-import os
 import cv2
 from EnrichDataSet import get_file_list
 import numpy as np
@@ -31,15 +30,18 @@ def make_false_pic(img_list, n=1):
         width = img.shape[1]
 
         for i in range(20):
-            cut_height = int(np.random.uniform(30, 80))
-            cut = get_random_cut_img(img, cut_height, height, width)
-            cv2.imwrite('./data/false_plate/F' + str(x) + str(i) + '.png', cut)
+            for j in range(3, 14):
+                cut_height = j * 10
+                cut = get_random_cut_img(img, cut_height, height, width)
+                cv2.imwrite('./data/false_plate/F' + str(x) + str(i) + str(j) + '.png', cut)
+            print(str((i + 1) * 200) + ' false images completed')
+
 
 
 def do_make_false_pic():
     org_img_folder = './data/cars'
     img_list = get_file_list(org_img_folder, [], 'png')
-    make_false_pic(img_list, n=1)
+    make_false_pic(img_list, len(img_list))
 
 
 do_make_false_pic()
