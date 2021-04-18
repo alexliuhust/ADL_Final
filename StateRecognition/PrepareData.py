@@ -2,6 +2,7 @@ import os
 import cv2
 import numpy as np
 import torch
+from torch.autograd import Variable
 
 
 def get_file_list(dir, file_list, ext=None):
@@ -48,6 +49,8 @@ def store_img_in_array():
             img = cv2.imread(img_path, cv2.IMREAD_COLOR)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             img_tensor = torch.tensor(img, dtype=torch.int)
+
+            img_tensor = Variable(torch.unsqueeze(img_tensor, dim=0).float(), requires_grad=True)
 
             if sin == go_to_test1 or sin == go_to_test2:
                 test_array.append([img_tensor, state_index])
