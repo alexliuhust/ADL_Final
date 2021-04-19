@@ -4,6 +4,12 @@ from EnrichDataSet import get_file_list
 from GetFeature import get_edge
 
 
+def cv_show(img, s):
+    cv2.imshow(s, img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
 def get_feature(img_list, n=1):
     for x in range(n):
         img_path = img_list[x]
@@ -24,4 +30,4 @@ def do_get_feature():
     get_feature(img_list, len(img_list))
 
 
-# do_get_feature()
+do_get_feature()
