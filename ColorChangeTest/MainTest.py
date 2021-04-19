@@ -1,8 +1,8 @@
 from ExtractCharsByColor import get_chars
 
-state = 'AZ'
+state = 'CA'
 
-for i in range(9, 19):
+for i in range(7, 19):
     if i <= 9:
         file_name = state + "0" + str(i) + ".png"
     else:

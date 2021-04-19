@@ -19,6 +19,8 @@ def get_chars(file_name):
     h_c = int(height / 5)
     w_c = int(width / 40)
     img = org[h_c:height - h_c, w_c:width - w_c]
+    if file_name[0:2] == "CA":
+        img = org[int(1.5*h_c):height - int(0.5*h_c), w_c:width - w_c]
 
     color_range = get_color_range(file_name)
 
@@ -43,5 +45,5 @@ def get_chars(file_name):
         kernel = np.ones((erode_num, erode_num), dtype=np.uint8)
         extr = cv2.erode(extr, kernel, iterations=1)
 
-    cv_show(extr, "Extraction")
+    cv_show(extr, file_name)
 
