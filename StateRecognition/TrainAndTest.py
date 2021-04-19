@@ -1,16 +1,9 @@
 import torch
-import sys
 import torch.nn as nn
 import torch.optim as optim
-import torch.nn.functional as F
 import torch.utils.data as Data
 import cv2
-from PIL import Image
-import torchvision
-import torchvision.transforms as transforms
 from torch.autograd import Variable
-import matplotlib.pyplot as plt
-import numpy as np
 from PrepareData import store_img_in_array
 from StateRecCNN import StateCNN
 from GetFeature import get_edge
@@ -25,12 +18,11 @@ def train():
 
     saving_path = './model/sccnn.pth'  # Where to find the saved model
     model = StateCNN()
-    # model.load_state_dict(torch.load(saving_path))    # Load the saved model
     learning_rate = 0.001  # Set the learning rate
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)  # Select ADAM as the optimizer
     loss_func = nn.CrossEntropyLoss()  # Select CrossEntropyLoss as the loss function
 
-    num_epoch = 3
+    num_epoch = 10
     for epoch in range(num_epoch):
         train_loss = 0
         correct = 0
@@ -50,7 +42,7 @@ def train():
             total += targets.size(0)  # Accumulate the total number of the samples
             correct += predicted.eq(targets).sum().item()  # Accumulate the number of correct classification
 
-            if (batch_idx + 1) % 5 == 0:
+            if (batch_idx + 1) % 100 == 0:
                 # ============================== Test result: ===================================
                 # Zero those result for each test
                 t_ttl_loss = 0
@@ -68,7 +60,7 @@ def train():
                             t_predicted.eq(t_targets).sum().item()  # Accumulate the number of correct classification
 
                 # ============================== Print result: ================================
-                if epoch == 0 and batch_idx == 4:  # Print the table attributes
+                if epoch == 0 and batch_idx == 99:  # Print the table attributes
                     print("\nModel Training Started...")
                     print("Epoch\tTrain Loss\tTrain Acc\tTest Loss\tTest Acc")
 
@@ -88,6 +80,12 @@ def train():
     print("Model saved in file: " + saving_path)
 
 
+def cv_show(img, s):
+    cv2.imshow(s, img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
 def single_test(file_name):
     saving_path = './model/sccnn.pth'  # Where to find the saved model
     model = StateCNN()
@@ -99,11 +97,11 @@ def single_test(file_name):
     img = cv2.imread(path, cv2.IMREAD_COLOR)                 # Get the image (.png)
     img = get_edge(img, True)
 
+    cv_show(img, "test image")
+
     image_tensor = torch.tensor(img, dtype=torch.int)     # Transform image into a tensor
     image_tensor = Variable(torch.unsqueeze(image_tensor, dim=0).float())
     image_tensor = Variable(torch.unsqueeze(image_tensor, dim=0).float())
-
-    print(image_tensor.size())
 
     with torch.no_grad():
         model.eval()
