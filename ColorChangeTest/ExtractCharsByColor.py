@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
-from states_color import get_color_range
-from edge_detect import get_edge
+from StateColorRange import get_color_range
 
 
 def cv_show(img, s):
@@ -10,13 +9,10 @@ def cv_show(img, s):
     cv2.destroyAllWindows()
 
 
-def get_chars(state):
-    org = cv2.imread("./" + state + ".png")
+def get_chars(file_name):
+    org = cv2.imread("../ZehuaPictures/data/origin/" + file_name)
     org = cv2.resize(org, (300, 150), interpolation=cv2.INTER_AREA)
     cv_show(org, "Origin")
-
-    input = org.copy()
-    edge = get_edge(input, True)
 
     height = org.shape[0]
     width = org.shape[1]
@@ -24,7 +20,7 @@ def get_chars(state):
     w_c = int(width / 40)
     img = org[h_c:height - h_c, w_c:width - w_c]
 
-    color_range = get_color_range(state)
+    color_range = get_color_range(file_name)
 
     for i in range(0, img.shape[0]):
         for j in range(0, img.shape[1]):
@@ -49,4 +45,3 @@ def get_chars(state):
 
     cv_show(extr, "Extraction")
 
-    cv_show(edge, "T&B Edge")

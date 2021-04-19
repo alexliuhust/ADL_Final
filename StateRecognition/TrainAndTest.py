@@ -115,19 +115,3 @@ def single_test(file_name):
 # train()
 single_test('GA08.png')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

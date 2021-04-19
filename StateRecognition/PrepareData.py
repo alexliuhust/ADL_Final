@@ -37,8 +37,6 @@ def store_img_in_array():
     train_array = []
     test_array = []
     img_list = get_file_list('./state_feature', [], 'png')
-    # img = cv2.imread(img_list[0], cv2.IMREAD_COLOR)
-    # print(img.shape)
 
     for dec in range(int(len(img_list) / 10)):
         go_to_test1 = int(np.random.uniform(0, 10))

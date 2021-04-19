@@ -1,15 +1,5 @@
-import torch
-import sys
 import torch.nn as nn
-import torch.optim as optim
 import torch.nn.functional as F
-import torch.utils.data as Data
-from PIL import Image
-import torchvision
-import torchvision.transforms as transforms
-from torch.autograd import Variable
-import matplotlib.pyplot as plt
-import numpy as np
 
 
 class StateCNN(nn.Module):
