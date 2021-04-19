@@ -19,6 +19,13 @@ train_data, test_data = store_img_in_array()
 train_loader = Data.DataLoader(dataset=train_data, batch_size=BATCH_SIZE, shuffle=True)
 test_loader = Data.DataLoader(dataset=test_data, batch_size=BATCH_SIZE, shuffle=True)
 
+# for batch_idx, (inputs, targets) in enumerate(train_loader):
+#     if batch_idx == 0:
+#         print(inputs.size())
+#         print(targets.size())
+#         print(targets[10])
+#         break
+
 saving_path = './model/sccnn.pth'             # Where to find the saved model
 model = StateCNN()
 # model.load_state_dict(torch.load(saving_path))    # Load the saved model
@@ -35,7 +42,6 @@ def train():
         total = 0
 
         for batch_idx, (inputs, targets) in enumerate(train_loader):
-            # input_data, targets = Variable(inputs).cuda(), Variable(targets).cuda()
             optimizer.zero_grad()  # Zero the gradient
 
             outputs = model(inputs)  # Get the output
@@ -56,7 +62,7 @@ def train():
                 t_total = 0
                 with torch.no_grad():
                     for test_batch_idx, (t_inputs, t_targets) in enumerate(test_loader):
-                        t_outputs = model(t_inputs)[0]  # Get the output
+                        t_outputs = model(t_inputs)  # Get the output
                         t_loss = loss_func(t_outputs, t_targets)  # Calculate the loss
 
                         t_ttl_loss += t_loss.item()  # Accumulate the total loss
@@ -66,7 +72,7 @@ def train():
                             t_predicted.eq(t_targets).sum().item()  # Accumulate the number of correct classification
 
                 # ============================== Print result: ================================
-                if epoch == batch_idx == 0:  # Print the table attributes
+                if epoch == 0 and batch_idx == 4:  # Print the table attributes
                     print("\nModel Training Started...")
                     print("Epoch\tTrain Loss\tTrain Acc\tTest Loss\tTest Acc")
 
