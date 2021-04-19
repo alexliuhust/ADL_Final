@@ -27,6 +27,11 @@ state2index = {
     'NC': 10, 'NJ': 11, 'NY': 12, 'OH': 13, 'PA': 14, 'TN': 15, 'TX': 16, 'VA': 17, 'WA': 18, 'WI': 19,
 }
 
+states = [
+    'AZ', 'CA', 'CO', 'FL', 'GA', 'IL', 'MA', 'MD', 'MI', 'MO',
+    'NC', 'NJ', 'NY', 'OH', 'PA', 'TN', 'TX', 'VA', 'WA', 'WI',
+]
+
 
 def store_img_in_array():
     train_array = []

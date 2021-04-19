@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 import torch.utils.data as Data
+import cv2
 from PIL import Image
 import torchvision
 import torchvision.transforms as transforms
@@ -12,29 +13,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PrepareData import store_img_in_array
 from StateRecCNN import StateCNN
-
-
-BATCH_SIZE = 32
-train_data, test_data = store_img_in_array()
-train_loader = Data.DataLoader(dataset=train_data, batch_size=BATCH_SIZE, shuffle=True)
-test_loader = Data.DataLoader(dataset=test_data, batch_size=BATCH_SIZE, shuffle=True)
-
-# for batch_idx, (inputs, targets) in enumerate(train_loader):
-#     if batch_idx == 0:
-#         print(inputs.size())
-#         print(targets.size())
-#         print(targets[10])
-#         break
-
-saving_path = './model/sccnn.pth'             # Where to find the saved model
-model = StateCNN()
-# model.load_state_dict(torch.load(saving_path))    # Load the saved model
-learning_rate = 0.001                             # Set the learning rate
-optimizer = optim.Adam(model.parameters(), lr=learning_rate)   # Select ADAM as the optimizer
-loss_func = nn.CrossEntropyLoss()                 # Select CrossEntropyLoss as the loss function
+from GetFeature import get_edge
+from PrepareData import states
 
 
 def train():
+    BATCH_SIZE = 32
+    train_data, test_data = store_img_in_array()
+    train_loader = Data.DataLoader(dataset=train_data, batch_size=BATCH_SIZE, shuffle=True)
+    test_loader = Data.DataLoader(dataset=test_data, batch_size=BATCH_SIZE, shuffle=True)
+
+    saving_path = './model/sccnn.pth'  # Where to find the saved model
+    model = StateCNN()
+    # model.load_state_dict(torch.load(saving_path))    # Load the saved model
+    learning_rate = 0.001  # Set the learning rate
+    optimizer = optim.Adam(model.parameters(), lr=learning_rate)  # Select ADAM as the optimizer
+    loss_func = nn.CrossEntropyLoss()  # Select CrossEntropyLoss as the loss function
+
     num_epoch = 3
     for epoch in range(num_epoch):
         train_loss = 0
@@ -45,6 +40,7 @@ def train():
             optimizer.zero_grad()  # Zero the gradient
 
             outputs = model(inputs)  # Get the output
+
             loss = loss_func(outputs, targets)  # Calculate the loss
             loss.backward()  # Backward propagation
             optimizer.step()  # Update the weights
@@ -92,6 +88,47 @@ def train():
     print("Model saved in file: " + saving_path)
 
 
-train()
+def single_test(file_name):
+    saving_path = './model/sccnn.pth'  # Where to find the saved model
+    model = StateCNN()
+    model.load_state_dict(torch.load(saving_path))    # Load the saved model
+
+    print("\n=============Single image classification started=============")
+    print("Input_file: " + file_name)
+    path = "./test_origin/" + file_name                 # Get the image PATH
+    img = cv2.imread(path, cv2.IMREAD_COLOR)                 # Get the image (.png)
+    img = get_edge(img, True)
+
+    image_tensor = torch.tensor(img, dtype=torch.int)     # Transform image into a tensor
+    image_tensor = Variable(torch.unsqueeze(image_tensor, dim=0).float())
+    image_tensor = Variable(torch.unsqueeze(image_tensor, dim=0).float())
+
+    print(image_tensor.size())
+
+    with torch.no_grad():
+        model.eval()
+        output = model(image_tensor)          # Get the output tensor
+        _, predicted = torch.max(output, 1)         # Get the index of the predicted label
+        pre_name = states[predicted[0]]            # Get the predicted label
+        print("Predicted_name: " + pre_name + "\n=============================================================")
+
+
+# train()
+single_test('WA03.png')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
