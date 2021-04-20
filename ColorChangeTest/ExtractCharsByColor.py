@@ -19,7 +19,8 @@ def get_chars(file_name):
     h_c = int(height / 5)
     w_c = int(width / 40)
     img = org[h_c:height - h_c, w_c:width - w_c]
-    if file_name[0:2] == "CA" or file_name[0:2] == "PA" or file_name[0:2] == "TX":
+    if file_name[0:2] == "CA" or file_name[0:2] == "PA" \
+            or file_name[0:2] == "TX" or file_name[0:2] == "WA":
         img = org[int(1.4*h_c):height - int(0.6*h_c), w_c:width - w_c]
 
     color_range = get_color_range(file_name)
