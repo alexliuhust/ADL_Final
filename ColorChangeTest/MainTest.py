@@ -1,6 +1,6 @@
 from ExtractCharsByColor import get_chars
 
-state = 'PA'
+state = 'TN'
 
 for i in range(1, 19):
     if i <= 9:
