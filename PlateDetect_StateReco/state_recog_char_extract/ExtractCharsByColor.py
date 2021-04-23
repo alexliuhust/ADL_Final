@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from StateColorRange import get_color_range
+from state_recog_char_extract.StateColorRange import get_color_range
 
 
 def cv_show(img, s):
@@ -9,21 +9,21 @@ def cv_show(img, s):
     cv2.destroyAllWindows()
 
 
-def get_chars(file_name):
-    org = cv2.imread("../ZehuaPictures/data/origin/" + file_name)
-    org = cv2.resize(org, (300, 150), interpolation=cv2.INTER_AREA)
-    # cv_show(org, "Origin")
+def get_chars(input_image, state):
+    # org = cv2.imread("../ZehuaPictures/data/origin/" + file_name)
+    org = cv2.resize(input_image, (300, 150), interpolation=cv2.INTER_AREA)
+    cv_show(org, "Origin")
 
     height = org.shape[0]
     width = org.shape[1]
     h_c = int(height / 5)
     w_c = int(width / 40)
     img = org[h_c:height - h_c, w_c:width - w_c]
-    if file_name[0:2] == "CA" or file_name[0:2] == "PA" \
-            or file_name[0:2] == "TX" or file_name[0:2] == "WA":
+    if state == "CA" or state == "PA" \
+            or state == "TX" or state == "WA":
         img = org[int(1.4*h_c):height - int(0.6*h_c), w_c:width - w_c]
 
-    color_range = get_color_range(file_name)
+    color_range = get_color_range(state)
 
     for i in range(0, img.shape[0]):
         for j in range(0, img.shape[1]):
@@ -46,5 +46,6 @@ def get_chars(file_name):
         kernel = np.ones((erode_num, erode_num), dtype=np.uint8)
         extr = cv2.erode(extr, kernel, iterations=1)
 
-    cv_show(extr, file_name)
+    cv_show(extr, state)
+    return extr
 

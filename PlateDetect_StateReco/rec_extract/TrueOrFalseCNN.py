@@ -2,9 +2,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-class StateCNN(nn.Module):
+class TOFCNN(nn.Module):
     def __init__(self):
-        super(StateCNN, self).__init__()
+        super(TOFCNN, self).__init__()
 
         self.pool = nn.MaxPool2d(5, 5)      # Max Pooling
         self.dropConv = nn.Dropout2d(0.3)    # Dropout for conv layers
@@ -15,11 +15,11 @@ class StateCNN(nn.Module):
         self.conv2 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=3, stride=1, padding=1)
         self.bn2 = nn.BatchNorm2d(32)
 
-        self.fc1 = nn.Linear(32 * 6 * 6, 512)
-        self.fc1_bn = nn.BatchNorm1d(512)
-        self.fc2 = nn.Linear(512, 128)
-        self.fc2_bn = nn.BatchNorm1d(128)
-        self.out = nn.Linear(128, 20)
+        self.fc1 = nn.Linear(32 * 8 * 8, 256)
+        self.fc1_bn = nn.BatchNorm1d(256)
+        self.fc2 = nn.Linear(256, 32)
+        self.fc2_bn = nn.BatchNorm1d(32)
+        self.out = nn.Linear(32, 2)
 
     def forward(self, x):
         # Conv layers
@@ -27,8 +27,9 @@ class StateCNN(nn.Module):
         x = self.dropConv(x)
         x = self.pool(F.relu(self.bn2(self.conv2(x))))
         x = self.dropConv(x)
+        # print(x.shape)
 
-        x = x.view(-1, 32 * 6 * 6)
+        x = x.view(-1, 32 * 8 * 8)
 
         # FC layers
         x = F.relu(self.fc1_bn(self.fc1(x)))
@@ -38,4 +39,3 @@ class StateCNN(nn.Module):
         out_put = self.out(x)
 
         return out_put
-

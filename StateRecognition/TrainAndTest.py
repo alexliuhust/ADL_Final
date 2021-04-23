@@ -30,7 +30,6 @@ def train():
 
         for batch_idx, (inputs, targets) in enumerate(train_loader):
             optimizer.zero_grad()  # Zero the gradient
-
             outputs = model(inputs)  # Get the output
 
             loss = loss_func(outputs, targets)  # Calculate the loss
