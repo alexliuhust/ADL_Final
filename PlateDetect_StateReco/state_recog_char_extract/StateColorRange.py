@@ -25,22 +25,3 @@ ranges = {
 
 def get_color_range(state):
     return ranges[state]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

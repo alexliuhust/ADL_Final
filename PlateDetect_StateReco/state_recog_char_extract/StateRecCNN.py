@@ -38,4 +38,3 @@ class StateCNN(nn.Module):
         out_put = self.out(x)
 
         return out_put
-

@@ -10,7 +10,6 @@ def cv_show(img, s):
 
 
 def get_chars(input_image, state):
-    # org = cv2.imread("../ZehuaPictures/data/origin/" + file_name)
     org = cv2.resize(input_image, (300, 150), interpolation=cv2.INTER_AREA)
     cv_show(org, "Origin")
 
@@ -47,5 +46,6 @@ def get_chars(input_image, state):
         extr = cv2.erode(extr, kernel, iterations=1)
 
     cv_show(extr, state)
+
     return extr
 

@@ -1,10 +1,6 @@
 import torch
-import torch.nn as nn
-import torch.optim as optim
-import torch.utils.data as Data
 import cv2
 from torch.autograd import Variable
-# from PrepareData import store_img_in_array
 from state_recog_char_extract.StateRecCNN import StateCNN
 from state_recog_char_extract.GetFeature import get_edge
 
@@ -95,14 +91,8 @@ def get_state_name(input_image):
     model.load_state_dict(torch.load(saving_path))    # Load the saved model
 
     print("\n=============Single image classification started=============")
-    # print("Input_file: " + file_name)
-    # path = "./test_origin/" + file_name                 # Get the image PATH
-    # img = cv2.imread(path, cv2.IMREAD_COLOR)                 # Get the image (.png)
-
     img = cv2.resize(input_image, (300, 150), interpolation=cv2.INTER_AREA)
     img = get_edge(img, True)
-
-    # cv_show(img, "test image")
 
     image_tensor = torch.tensor(img, dtype=torch.int)     # Transform image into a tensor
     image_tensor = Variable(torch.unsqueeze(image_tensor, dim=0).float())
@@ -116,7 +106,3 @@ def get_state_name(input_image):
         print("Predicted_name: " + pre_name + "\n=============================================================")
 
     return pre_name
-
-# train()
-# single_test('GA08.png')
-

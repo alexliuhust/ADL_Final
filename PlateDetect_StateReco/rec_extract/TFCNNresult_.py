@@ -1,10 +1,6 @@
 import torch
-import torch.nn as nn
-import torch.optim as optim
-import torch.utils.data as Data
 import cv2
 from torch.autograd import Variable
-# from PrepareData import start_make_dataset
 from rec_extract.TrueOrFalseCNN import TOFCNN
 
 
@@ -124,8 +120,3 @@ def single_test_by_dataflow(image):
         result = result.item()  # convert tensor into int
 
     return result
-
-
-# train()
-# result = single_test_by_filepath('./True_test/MO041.png')
-# result = single_test_by_filepath('./False_test/F19112.png')
