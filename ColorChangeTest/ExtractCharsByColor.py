@@ -47,4 +47,4 @@ def get_chars(file_name):
         extr = cv2.erode(extr, kernel, iterations=1)
 
     cv_show(extr, file_name)
-
+    return extr

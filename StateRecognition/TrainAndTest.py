@@ -97,7 +97,7 @@ def single_test(file_name):
     img = cv2.resize(img, (300, 150), interpolation=cv2.INTER_AREA)
     img = get_edge(img, True)
 
-    # cv_show(img, "test image")
+    cv_show(img, "test image")
 
     image_tensor = torch.tensor(img, dtype=torch.int)     # Transform image into a tensor
     image_tensor = Variable(torch.unsqueeze(image_tensor, dim=0).float())
@@ -112,5 +112,5 @@ def single_test(file_name):
 
 
 # train()
-single_test('GA08.png')
+single_test('TN02.png')
 
