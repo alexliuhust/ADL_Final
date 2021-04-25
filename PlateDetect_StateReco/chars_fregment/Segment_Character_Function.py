@@ -1,5 +1,7 @@
 import cv2
+import numpy as np
 from matplotlib import pyplot as plt
+from state_recog_char_extract.ExtractCharsByColor import cv_show
 
 
 def segment_character(input_image):
@@ -37,4 +39,4 @@ def segment_character(input_image):
         plt.imshow(word_images[i], cmap='gray')
     plt.show()
 
-    return i + 1
+    return word_images, i + 1

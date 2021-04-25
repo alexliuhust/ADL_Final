@@ -18,8 +18,7 @@ def get_chars(input_image, state):
     h_c = int(height / 5)
     w_c = int(width / 40)
     img = org[h_c:height - h_c, w_c:width - w_c]
-    if state == "CA" or state == "PA" \
-            or state == "TX" or state == "WA":
+    if state == "CA" or state == "TX" or state == "WA":
         img = org[int(1.4*h_c):height - int(0.6*h_c), w_c:width - w_c]
 
     color_range = get_color_range(state)
