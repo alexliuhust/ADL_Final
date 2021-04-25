@@ -27,8 +27,8 @@ def segment_character(input_image):
     i = 0
     for word in words:
 
-        if (word[3] > (word[2] * 1)) and (word[3] < (word[2] * 3)) and (word[2] > 10) and \
-                (word[3] > 0.5 * input_image.shape[0]) and (word[2] > 0.05 * input_image.shape[1]):
+        if (word[3] > (word[2] * 1)) and (word[3] < (word[2] * 4)) and (word[2] > 10) and \
+                (word[3] > 0.5 * input_image.shape[0]) and (word[2] > 0.01 * input_image.shape[1]):
             i = i + 1
             split_image = image[word[1]:word[1] + word[3], word[0]:word[0] + word[2]]
             split_image = cv2.resize(split_image, (25, 40))
