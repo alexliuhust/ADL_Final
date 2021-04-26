@@ -1,7 +1,7 @@
 from rec_extract.FindRect_And_Determine import findRect_and_determine
 from state_recog_char_extract.StateRecogResult import get_state_name
 from state_recog_char_extract.ExtractCharsByColor import get_chars
-from chars_fregment.Segment_Character_Function import segment_character
+from chars_segment.Segment_Character_Function import segment_character
 from chars_recog.CharacterRecognition import get_char_recog_result
 
 

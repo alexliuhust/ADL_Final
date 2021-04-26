@@ -27,11 +27,12 @@ def segment_character(input_image):
     i = 0
     for word in words:
 
-        if (word[3] > (word[2] * 1)) and (word[3] < (word[2] * 4)) and (word[2] > 10) and \
+        if (word[3] > (word[2] * 1)) and (word[3] < (word[2] * 5)) and (word[2] > 10) and \
                 (word[3] > 0.5 * input_image.shape[0]) and (word[2] > 0.01 * input_image.shape[1]):
             i = i + 1
             split_image = image[word[1]:word[1] + word[3], word[0]:word[0] + word[2]]
             split_image = cv2.resize(split_image, (25, 40))
+            split_image = cv2.copyMakeBorder(split_image, 3, 3, 15, 14, cv2.BORDER_CONSTANT)
             word_images.append(split_image)
 
     for i, j in enumerate(word_images):
