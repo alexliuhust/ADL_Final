@@ -23,7 +23,9 @@ def crop_rect(img, rect):  # https://blog.csdn.net/loovelj/article/details/90080
 
 def find_rect(img_path):
     im = cv2.imread(img_path)
-    imgray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+    imgray = im.copy()
+    if len(im.shape) == 3:
+        imgray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 
     ret, thresh = cv2.threshold(imgray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     contours = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)

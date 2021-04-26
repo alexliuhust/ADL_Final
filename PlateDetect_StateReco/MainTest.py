@@ -14,15 +14,12 @@ def do_big_test(image_path):
     print(state_name + ": " + result)
 
 
-# do_big_test('data/image_license_plate/01.png')
-# do_big_test('data/image_license_plate/02.png')
-# do_big_test('data/image_license_plate/03.png')
-# do_big_test('data/image_license_plate/04.png')
-# do_big_test('data/image_license_plate/05.png')
-# do_big_test('data/image_license_plate/06.png')
-# do_big_test('data/image_license_plate/07.png')
-# do_big_test('data/image_license_plate/08.png')
+path = 'data/image_license_plate/'
 
-
-
+for i in range(16, 17):
+    if i <= 9:
+        image_path = path + "0" + str(i) + ".png"
+    else:
+        image_path = path + str(i) + ".png"
+    do_big_test(image_path)
 
