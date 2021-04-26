@@ -39,4 +39,4 @@ def segment_character(input_image):
         plt.imshow(word_images[i], cmap='gray')
     plt.show()
 
-    return word_images, i + 1
+    return word_images

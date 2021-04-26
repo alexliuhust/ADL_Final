@@ -90,7 +90,7 @@ def get_state_name(input_image):
     model = StateCNN()
     model.load_state_dict(torch.load(saving_path))    # Load the saved model
 
-    print("\n=============Single image classification started=============")
+    # print("\n=============Single image classification started=============")
     img = cv2.resize(input_image, (300, 150), interpolation=cv2.INTER_AREA)
     img = get_edge(img, True)
 
@@ -103,6 +103,6 @@ def get_state_name(input_image):
         output = model(image_tensor)          # Get the output tensor
         _, predicted = torch.max(output, 1)         # Get the index of the predicted label
         pre_name = states[predicted[0]]            # Get the predicted label
-        print("Predicted_name: " + pre_name + "\n=============================================================")
+        # print("Predicted_name: " + pre_name + "\n=============================================================")
 
     return pre_name
