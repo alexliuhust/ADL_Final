@@ -16,7 +16,7 @@ def do_big_test(image_path):
 
 path = 'data/image_license_plate/'
 
-for i in range(16, 17):
+for i in range(17, 19):
     if i <= 9:
         image_path = path + "0" + str(i) + ".png"
     else:
