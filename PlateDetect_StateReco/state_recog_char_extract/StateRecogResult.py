@@ -93,7 +93,8 @@ def get_state_name(input_image):
     # print("\n=============Single image classification started=============")
     img = cv2.resize(input_image, (300, 150), interpolation=cv2.INTER_AREA)
     img = get_edge(img, True)
-
+    cv_show(img, 'Feature')
+    img = cv2.resize(img, (150, 150), interpolation=cv2.INTER_AREA)
     image_tensor = torch.tensor(img, dtype=torch.int)     # Transform image into a tensor
     image_tensor = Variable(torch.unsqueeze(image_tensor, dim=0).float())
     image_tensor = Variable(torch.unsqueeze(image_tensor, dim=0).float())

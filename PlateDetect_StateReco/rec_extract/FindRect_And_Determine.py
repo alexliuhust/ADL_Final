@@ -14,8 +14,8 @@ def findRect_and_determine(image_path):
     if len(rect_images) < 1:
         raise RuntimeError('Cannot detect any rectangle.')
 
-    for image in rect_images:
-        cv_show(image, "rec")
+    # for image in rect_images:
+    #     cv_show(image, "rec")
 
     num_True = 0
     image_return = rect_images[0]

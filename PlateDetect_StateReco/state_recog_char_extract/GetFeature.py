@@ -32,5 +32,5 @@ def get_edge(img, top_bottom):
             else:
                 edge[i, j] = 0
 
-    edge = cv2.resize(edge, (150, 150), interpolation=cv2.INTER_AREA)
+    # edge = cv2.resize(edge, (150, 150), interpolation=cv2.INTER_AREA)
     return edge

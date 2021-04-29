@@ -11,7 +11,7 @@ class Net(nn.Module):
         self.fc1 = nn.Linear(16 * 4 * 4, 110)
         self.fc2 = nn.Linear(110, 150)
         self.fc3 = nn.Linear(150, 130)
-        self.fc4 = nn.Linear(130, 35)  # Three fully connected layers 35 is the final output has 35 categories
+        self.fc4 = nn.Linear(130, 36)  # Three fully connected layers 35 is the final output has 35 categories
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))

@@ -8,6 +8,8 @@ def get_char_recog_result(images):
 
     result = ''
     for i in range(len(images)):
+        if str1[i] == '#':
+            continue
         result = result + str1[i]
 
     return result

@@ -2,6 +2,12 @@ import cv2
 import numpy as np
 
 
+def cv_show(img, s):
+    cv2.imshow(s, img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
 def crop_rect(img, rect):  # https://blog.csdn.net/loovelj/article/details/90080725
     # get the parameter of the small rectangle
     center, size, angle = rect[0], rect[1], rect[2]
@@ -23,6 +29,11 @@ def crop_rect(img, rect):  # https://blog.csdn.net/loovelj/article/details/90080
 
 def find_rect(img_path):
     im = cv2.imread(img_path)
+    car_img = im.copy()
+    ratio = im.shape[1] / im.shape[0]
+    car_img = cv2.resize(car_img, (300, int(300 / ratio)), interpolation=cv2.INTER_AREA)
+    cv_show(car_img, 'car')
+
     imgray = im.copy()
     if len(im.shape) == 3:
         imgray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
