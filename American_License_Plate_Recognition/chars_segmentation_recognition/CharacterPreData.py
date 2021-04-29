@@ -37,7 +37,7 @@ classes = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B',
 def store_img_in_array():
     train_array = []
     test_array = []
-    img_list = get_file_list('./new_datasource', [], 'png')
+    img_list = get_file_list('../data/chars', [], 'png')
 
     for dec in range(int(len(img_list) / 10)):
         go_to_test1 = int(np.random.uniform(0, 10))
